@@ -4,24 +4,25 @@ module GeoRuby
   module Gpx4r
     # An interface to GPX files
     class GpxFile
-      attr_reader :record_count, :file_root #:xmin, :ymin, :xmax, :ymax, :zmin, :zmax, :mmin, :mmax, :file_length
+      attr_reader :record_count #:xmin, :ymin, :xmax, :ymax, :zmin, :zmax, :mmin, :mmax, :file_length
 
       include Enumerable
 
       # Opens a GPX file. Both "abc.shp" and "abc" are accepted.
       def initialize(file, *opts) # with_z = true, with_m = true)
-        @file_root = file.gsub(/\.gpx$/i, '')
-        fail MalformedGpxException.new('Missing GPX File') unless
-          File.exist? @file_root + '.gpx'
+        @file = file.downcase.end_with?('.gpx') ? file : "#{file}.gpx"
+
+        fail MalformedGpxException.new('Missing GPX File') unless File.exist?(@file)
+
         @points, @envelope = [], nil
-        @gpx = File.open(@file_root + '.gpx', 'rb')
+        @gpx = File.open(@file, 'rb')
         opt = opts.reduce({}) { |a, e| e.merge(a) }
         parse_file(opt[:with_z], opt[:with_m])
       end
 
       # force the reopening of the files compsing the shp. Close before calling this.
       def reload!
-        initialize(@file_root)
+        initialize(@file)
       end
 
       # opens a GPX "file". If a block is given, the GpxFile object is yielded to it and is closed upon return. Else a call to <tt>open</tt> is equivalent to <tt>GpxFile.new(...)</tt>.

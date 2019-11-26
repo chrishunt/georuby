@@ -12,7 +12,7 @@ describe GeoRuby::Gpx4r do
   describe 'Waypoints' do
 
     before(:all) do
-      @gpxfile = GeoRuby::Gpx4r::GpxFile.open(File.dirname(__FILE__) + '/../data/gpx/short.gpx', with_z: true, with_m: true)
+      @gpxfile = GeoRuby::Gpx4r::GpxFile.open(File.dirname(__FILE__) + '/../data/gpx/short.GPX', with_z: true, with_m: true)
       @gpxfile2 = GeoRuby::Gpx4r::GpxFile.open(File.dirname(__FILE__) + '/../data/gpx/fells_loop', with_z: true, with_m: true)
       @gpxfile3 = GeoRuby::Gpx4r::GpxFile.open(File.dirname(__FILE__) + '/../data/gpx/tracktreks.gpx', with_z: true)
     end
