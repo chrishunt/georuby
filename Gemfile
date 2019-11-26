@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rake'
 
 group :test do
-  gem 'dbf'
+  gem 'dbf', '2.0.7'
   gem 'json'
   gem 'nokogiri'
 
